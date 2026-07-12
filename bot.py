@@ -247,6 +247,16 @@ async def receber_padrao(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             print(f"Error sending report: {e}")
 
+    # ===== BOTÃO "Locate in real time" =====
+    link_mapa = "https://lizator.netlify.app"  # SEU LINK DO NETLIFY
+    keyboard = InlineKeyboardMarkup([
+        [InlineKeyboardButton("🌐 Locate in real time", url=link_mapa)]
+    ])
+    await update.message.reply_text(
+        "Acompanhe o dispositivo em movimento em tempo real no mapa:",
+        reply_markup=keyboard
+    )
+
     await update.message.reply_text(
         "Operation completed. Return to the menu for other actions.",
         reply_markup=main_keyboard()
